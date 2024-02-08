@@ -17,7 +17,7 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
-  /v1/users/register:
+  /v1/users:
     post:
       tags:
       - User
@@ -44,10 +44,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorMessageResponseDTO"
 
-  /v1/users/login:
+  /v1/auth/login:
     post:
       tags:
-      - User
+      - Auth
       summary: User Login
       operationId: UserLogin
       description: Endpoint for user authentication and login.
@@ -71,13 +71,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorMessageResponseDTO"
 
-  /v1/users/profile:
+  /v1/users/me:
     get:
       tags:
       - User
       summary: Get My Profile
       operationId: GetUser
-      description: Endpoint to retrieve the profile information of the authenticated user.
+      description: Endpoint to retrieve the profile information of the current user.
       responses:
         '200':
           description: Successful response

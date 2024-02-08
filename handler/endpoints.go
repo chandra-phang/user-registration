@@ -12,7 +12,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// (POST /v1/users/register)
+// (POST /v1/users)
 func (s *Server) UserRegister(ctx echo.Context) error {
 	var requestBody generated.UserRegisterRequestDTO
 	err := ctx.Bind(&requestBody)
@@ -74,7 +74,7 @@ func (s *Server) UserRegister(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, generated.UserRegisterResponseDTO{Id: user.ID})
 }
 
-// (POST /v1/users/login)
+// (POST /v1/auth/login)
 func (s *Server) UserLogin(ctx echo.Context) error {
 	var requestBody generated.UserLoginRequestDTO
 	err := ctx.Bind(&requestBody)
@@ -122,7 +122,7 @@ func (s *Server) UserLogin(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, generated.UserLoginResponseDTO{Id: user.ID, Token: token})
 }
 
-// (GET /v1/users/profile)
+// (GET /v1/users/me)
 func (s *Server) GetUser(ctx echo.Context) error {
 	tokenUser, err := s.JwtService.Auth(ctx.Request())
 	if err != nil {
@@ -139,7 +139,7 @@ func (s *Server) GetUser(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, generated.UserProfileResponseDTO{Name: user.Name, PhoneNumber: user.PhoneNumber})
 }
 
-// (PATCH /v1/users/profile)
+// (PATCH /v1/users/me)
 func (s *Server) UpdateUser(ctx echo.Context) error {
 	tokenUser, err := s.JwtService.Auth(ctx.Request())
 	if err != nil {

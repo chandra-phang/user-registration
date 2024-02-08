@@ -40,7 +40,7 @@ func Test_UserRegister_Success(t *testing.T) {
 		"phoneNumber": "+628123456789",
 		"password": "ABC123!"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -65,7 +65,7 @@ func Test_UserRegister_ReturnError_WhenRequestBodyIsInvalid(t *testing.T) {
 	}
 
 	requestBody := `{`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -90,7 +90,7 @@ func Test_UserRegister_ReturnError_WhenRequestBodyIsEmpty(t *testing.T) {
 	}
 
 	requestBody := `{}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -119,7 +119,7 @@ func Test_UserRegister_ReturnError_WhenNameIsShorterThan3Chars(t *testing.T) {
 		"phoneNumber": "+628123456789",
 		"password": "ABC123!"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -148,7 +148,7 @@ func Test_UserRegister_ReturnError_WhenNameIsLongerThan60Chars(t *testing.T) {
 		"phoneNumber": "+628123456789",
 		"password": "ABC123!"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -177,7 +177,7 @@ func Test_UserRegister_ReturnError_WhenPasswordIsShorterThan6Chars(t *testing.T)
 		"phoneNumber": "+628123456789",
 		"password": "ABC"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -206,7 +206,7 @@ func Test_UserRegister_ReturnError_WhenPasswordIsLongerThan64Chars(t *testing.T)
 		"phoneNumber": "+628123456789",
 		"password": "Supercalifragilisticexpialidocious-Is-Awesome-And-Even-More-Awesome-Than-You-Can-Imagine"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -235,7 +235,7 @@ func Test_UserRegister_ReturnError_WhenPasswordIsNotSatisfyRules(t *testing.T) {
 		"phoneNumber": "+628123456789",
 		"password": "ABC123"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -264,7 +264,7 @@ func Test_UserRegister_ReturnError_WhenPhonenNumberIsShorterThan10Chars(t *testi
 		"phoneNumber": "+62812",
 		"password": "ABC123!"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -293,7 +293,7 @@ func Test_UserRegister_ReturnError_WhenPhoneNumberIsLongerThan13Chars(t *testing
 		"phoneNumber": "+62812345678910",
 		"password": "ABC123!"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -322,7 +322,7 @@ func Test_UserRegister_ReturnError_WhenPhoneNumberIsNotSatisfyRules(t *testing.T
 		"phoneNumber": "08123456789",
 		"password": "ABC123!"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -354,7 +354,7 @@ func Test_UserRegister_ReturnError_WhenGetUserByPhoneNumberIsFailed(t *testing.T
 		"phoneNumber": "+628123456789",
 		"password": "ABC123!"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -392,7 +392,7 @@ func Test_UserRegister_ReturnError_WhenPhoneNumberIsAlreadyRegistered(t *testing
 		"phoneNumber": "+628123456789",
 		"password": "ABC123!"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -428,7 +428,7 @@ func Test_UserRegister_ReturnError_WhenCreateUserIsFailed(t *testing.T) {
 		"phoneNumber": "+628123456789",
 		"password": "ABC123!"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/register", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/users", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -477,7 +477,7 @@ func Test_UserLogin_Success(t *testing.T) {
 		"password": "ABC123!"
 	}`
 
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/login", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/auth/login", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -504,7 +504,7 @@ func Test_UserLogin_ReturnError_WhenRequestBodyIsInvalid(t *testing.T) {
 
 	requestBody := `{`
 
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/login", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/auth/login", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -532,7 +532,7 @@ func Test_UserLogin_ReturnError_WhenRequestBodyIsEmpty(t *testing.T) {
 
 	requestBody := `{}`
 
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/login", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/auth/login", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -566,7 +566,7 @@ func Test_UserLogin_ReturnError_WhenPhoneNumberIsNotRegistered(t *testing.T) {
 		"phoneNumber": "+628123456789",
 		"password": "ABC123!"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/login", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/auth/login", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -608,7 +608,7 @@ func Test_UserLogin_ReturnError_WhenPasswordIsNotMatch(t *testing.T) {
 		"phoneNumber": "+628123456789",
 		"password": "wrong-password"
 	}`
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/login", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/auth/login", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -653,7 +653,7 @@ func Test_UserLogin_ReturnError_WhenGenerateTokenIsFailed(t *testing.T) {
 		"password": "ABC123!"
 	}`
 
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/login", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/auth/login", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -701,7 +701,7 @@ func Test_UserLogin_ReturnError_WhenCreateLoginLogIsFailed(t *testing.T) {
 		"password": "ABC123!"
 	}`
 
-	req := httptest.NewRequest(http.MethodPost, "/v1/users/login", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPost, "/v1/auth/login", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -738,7 +738,7 @@ func Test_GetUser_Success(t *testing.T) {
 		GetUserByID(gomock.Any(), mockUser.ID).
 		Return(&mockUser, nil)
 
-	req := httptest.NewRequest(http.MethodGet, "/v1/users/profile", nil)
+	req := httptest.NewRequest(http.MethodGet, "/v1/users/me", nil)
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -766,7 +766,7 @@ func Test_GetUser_ReturnError_WhenBearerTokenIsInvalid(t *testing.T) {
 		Auth(gomock.Any()).
 		Return(nil, errors.New("invalid token"))
 
-	req := httptest.NewRequest(http.MethodGet, "/v1/users/profile", nil)
+	req := httptest.NewRequest(http.MethodGet, "/v1/users/me", nil)
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -798,7 +798,7 @@ func Test_GetUser_ReturnError_WhenUserIdIsNotIdentified(t *testing.T) {
 		GetUserByID(gomock.Any(), "invalid-user-id").
 		Return(nil, apperror.ErrObjectNotExists)
 
-	req := httptest.NewRequest(http.MethodGet, "/v1/users/profile", nil)
+	req := httptest.NewRequest(http.MethodGet, "/v1/users/me", nil)
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -850,7 +850,7 @@ func Test_UpdateUser_Success(t *testing.T) {
 		"name": "agus",
 		"phoneNumber": "+628123456780"
 	}`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -881,7 +881,7 @@ func Test_UpdateUser_ReturnError_WhenBearerTokenIsInvalid(t *testing.T) {
 		"name": "agus",
 		"phoneNumber": "+628123456780"
 	}`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -910,7 +910,7 @@ func Test_UpdateUser_ReturnError_WhenRequestBodyIsInvalid(t *testing.T) {
 		Return(&middleware.User{ID: "user-id"}, nil)
 
 	requestBody := `{`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -939,7 +939,7 @@ func Test_UpdateUser_ReturnError_WhenRequestBodyIsEmpty(t *testing.T) {
 		Return(&middleware.User{ID: "user-id"}, nil)
 
 	requestBody := `{}`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -968,7 +968,7 @@ func Test_UpdateUser_ReturnError_WhenPhoneNumberIsShorterThan10Chars(t *testing.
 		Return(&middleware.User{ID: "user-id"}, nil)
 
 	requestBody := `{"phoneNumber": "+6281234"}`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -997,7 +997,7 @@ func Test_UpdateUser_ReturnError_WhenPhoneNumberIsLongerThan10Chars(t *testing.T
 		Return(&middleware.User{ID: "user-id"}, nil)
 
 	requestBody := `{"phoneNumber": "+62812345678910"}`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -1035,7 +1035,7 @@ func Test_UpdateUser_ReturnError_WhenPhoneNumberIsNotSatisfyRules(t *testing.T) 
 		Return(&mockUser, nil)
 
 	requestBody := `{"phoneNumber": "08123456789"}`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -1067,7 +1067,7 @@ func Test_UpdateUser_ReturnError_WhenUserIdIsUnidentified(t *testing.T) {
 		Return(nil, apperror.ErrObjectNotExists)
 
 	requestBody := `{"phoneNumber": "+628123456789"}`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -1109,7 +1109,7 @@ func Test_UpdateUser_ReturnError_WhenGetUserByPhoneNumberIsFailed(t *testing.T) 
 		Return(nil, apperror.ErrGetRecordFailed)
 
 	requestBody := `{"phoneNumber": "+628123456780"}`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -1156,7 +1156,7 @@ func Test_UpdateUser_ReturnError_WhenUpdatedPhoneNumberIsAlreadyRegisteredByDiff
 		Return(&differentUser, nil)
 
 	requestBody := `{"phoneNumber": "+628123456780"}`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -1202,7 +1202,7 @@ func Test_UpdateUser_ReturnSuccess_WithOnlyUpdateName(t *testing.T) {
 		Return(nil)
 
 	requestBody := `{"name": "agus"}`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -1251,7 +1251,7 @@ func Test_UpdateUser_ReturnSuccess_WithOnlyUpdatePhoneNumber(t *testing.T) {
 		Return(nil)
 
 	requestBody := `{"phoneNumber": "+628123456780"}`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
@@ -1300,7 +1300,7 @@ func Test_UpdateUser_ReturnError_WhenUpdateUserIsFailed(t *testing.T) {
 		Return(apperror.ErrUpdateRecordFailed)
 
 	requestBody := `{"phoneNumber": "+628123456780"}`
-	req := httptest.NewRequest(http.MethodPatch, "/v1/users/profile", strings.NewReader(requestBody))
+	req := httptest.NewRequest(http.MethodPatch, "/v1/users/me", strings.NewReader(requestBody))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 
 	rec := httptest.NewRecorder()
