@@ -78,7 +78,7 @@ func (svc *JwtService) GenerateToken(userID string) (string, error) {
 
 	claims := make(jwt.MapClaims)
 	claims[userIdKey] = userID
-	claims[expiryAtKey] = now.Add(1 * time.Hour).Unix() // The expiration time after which the token must be disregarded.
+	claims[expiryAtKey] = now.Add(3 * time.Hour).Unix() // The expiration time after which the token must be disregarded.
 	claims[issuedAtKey] = now.Unix()
 
 	key, err := svc.parsePrivateKey()
