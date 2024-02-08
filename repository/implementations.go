@@ -109,3 +109,23 @@ func (r *Repository) UpdateUser(ctx context.Context, user model.User) error {
 
 	return nil
 }
+
+func (r *Repository) CreateLoginLog(ctx context.Context, loginLog model.LoginLog) error {
+	query := `
+		INSERT INTO login_logs (id, user_id, created_at)
+		VALUES ($1, $2, $3)
+	`
+	params := []interface{}{
+		loginLog.ID, loginLog.User.ID, time.Now(),
+	}
+	res, err := r.Db.ExecContext(ctx, query, params...)
+	if err != nil {
+		return nil
+	}
+	affected, _ := res.RowsAffected()
+	if affected == 0 {
+		return errors.New("create loginLog failed")
+	}
+
+	return nil
+}

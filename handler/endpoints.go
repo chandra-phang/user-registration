@@ -41,6 +41,17 @@ func (s *Server) UserRegister(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, resp)
 	}
 
+	existingUser, err := s.Repository.GetUserByPhoneNumber(ctx.Request().Context(), requestBody.PhoneNumber)
+	if err != nil && err != apperror.ErrObjectNotExists {
+		resp := generated.ErrorMessageResponseDTO{Error: err.Error()}
+		return ctx.JSON(http.StatusInternalServerError, resp)
+	}
+
+	if existingUser != nil && existingUser.ID != "" {
+		resp := generated.ErrorMessageResponseDTO{Error: apperror.ErrDuplicateRecordFound.Error()}
+		return ctx.JSON(http.StatusConflict, resp)
+	}
+
 	password, err := utils.GenerateHash(requestBody.Password)
 	if err != nil {
 		resp := generated.ErrorMessageResponseDTO{Error: "hash password is failed"}
@@ -95,7 +106,17 @@ func (s *Server) UserLogin(ctx echo.Context) error {
 	token, err := s.JwtService.GenerateToken(user.ID)
 	if err != nil {
 		resp := generated.ErrorMessageResponseDTO{Error: err.Error()}
-		return ctx.JSON(http.StatusBadRequest, resp)
+		return ctx.JSON(http.StatusInternalServerError, resp)
+	}
+
+	loginLog := model.LoginLog{
+		ID:   utils.GenerateUUID(),
+		User: model.User{ID: user.ID},
+	}
+	err = s.Repository.CreateLoginLog(ctx.Request().Context(), loginLog)
+	if err != nil {
+		resp := generated.ErrorMessageResponseDTO{Error: err.Error()}
+		return ctx.JSON(http.StatusInternalServerError, resp)
 	}
 
 	return ctx.JSON(http.StatusOK, generated.UserLoginResponseDTO{Id: user.ID, Token: token})
@@ -133,8 +154,6 @@ func (s *Server) UpdateUser(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, resp)
 	}
 
-	println("name: ", requestBody.Name)
-	println("phone: ", requestBody.PhoneNumber)
 	validate := validator.New()
 	err = validate.Struct(requestBody)
 	if err != nil {

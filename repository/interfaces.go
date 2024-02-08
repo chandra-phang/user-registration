@@ -10,10 +10,12 @@ import (
 	"github.com/chandra-phang/sawit-pro/model"
 )
 
-//go:generate mockgen -source=user_repo.go -destination=./mock_repository/user_repo_mock.go
+//go:generate mockgen -source=interfaces.go -destination=./interfaces.mock.gen.go -package=repository .
 type RepositoryInterface interface {
 	CreateUser(ctx context.Context, user model.User) error
 	GetUserByPhoneNumber(ctx context.Context, phoneNumber string) (*model.User, error)
 	GetUserByID(ctx context.Context, id string) (*model.User, error)
 	UpdateUser(ctx context.Context, user model.User) error
+
+	CreateLoginLog(ctx context.Context, loginLog model.LoginLog) error
 }

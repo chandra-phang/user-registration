@@ -15,5 +15,12 @@ CREATE TABLE users (
   "created_at" TIMESTAMP(0) NOT NULL,
   "updated_at" TIMESTAMP(0) NOT NULL
 );
-
 CREATE INDEX idx_users_on_phone_number ON users("phone_number");
+
+CREATE TABLE login_logs (
+  "id" varchar(36) PRIMARY KEY,
+  "user_id" varchar(36),
+  "created_at" TIMESTAMP(0) NOT NULL,
+  FOREIGN KEY ("user_id") REFERENCES users("id")
+);
+CREATE INDEX idx_login_logs_on_user_id ON login_logs("user_id");

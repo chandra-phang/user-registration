@@ -18,6 +18,7 @@ const (
 	issuedAtKey = "issued_at"
 )
 
+//go:generate mockgen -source=jwt_service.go -destination=./jwt_service.mock.gen.go -package=middleware .
 type IJwtService interface {
 	GenerateToken(userID string) (string, error)
 	Auth(r *http.Request) (*User, error)
