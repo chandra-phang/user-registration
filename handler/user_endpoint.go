@@ -163,7 +163,7 @@ func (s *Server) UpdateUser(ctx echo.Context) error {
 		return ctx.JSON(http.StatusForbidden, resp)
 	}
 
-	if existingUser.ID != "" && existingUser.ID != user.ID {
+	if existingUser != nil && existingUser.ID != user.ID {
 		resp := generated.ErrorMessageResponseDTO{Error: apperror.ErrDuplicateRecordFound.Error()}
 		return ctx.JSON(http.StatusConflict, resp)
 	}
