@@ -12,6 +12,9 @@ var (
 	ErrDeleteRecordFailed   = errors.New("delete record failed")
 	ErrDuplicateRecordFound = errors.New("duplicate record found")
 
+	// Request
+	ErrInvalidRequestBody = errors.New("invalid request body")
+
 	// User
 	ErrInvalidPhoneNumberOrPassword = errors.New("invalid phone_number or password")
 )

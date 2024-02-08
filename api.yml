@@ -135,24 +135,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorMessageResponseDTO"
-
 components:
   schemas:
-    FieldUserName:
+    FieldRequiredUserName:
+      type: string
+      example: agus
+      x-oapi-codegen-extra-tags:
+        validate: required,min=3,max=60
+    FieldRequiredUserPhoneNumber:
+      type: string
+      example: "+628123456789"
+      x-oapi-codegen-extra-tags:
+        validate: required,min=10,max=13
+    FieldRequiredUserPassword:
+      type: string
+      example: "abc123!"
+      x-oapi-codegen-extra-tags:
+        validate: required,min=6,max=64
+    FieldOmitemptyUserName:
       type: string
       example: agus
       x-oapi-codegen-extra-tags:
         validate: omitempty,min=3,max=60
-    FieldUserPhoneNumber:
-      type: string
-      example: "+628123456789"
-      x-oapi-codegen-extra-tags:
-        validate: omitempty,min=10,max=15
-    FieldUserPassword:
+    FieldOmitemptyUserPhoneNumber:
       type: string
       example: "abc123!"
       x-oapi-codegen-extra-tags:
-        validate: omitempty,min=6,max=64
+        validate: omitempty,min=10,max=13
     UserRegisterRequestDTO:
       type: object
       required:
@@ -161,11 +170,11 @@ components:
         - password
       properties:
         name:
-          $ref: "#/components/schemas/FieldUserName"
+          $ref: "#/components/schemas/FieldRequiredUserName"
         phoneNumber:
-          $ref: "#/components/schemas/FieldUserPhoneNumber"
+          $ref: "#/components/schemas/FieldRequiredUserPhoneNumber"
         password:
-          $ref: "#/components/schemas/FieldUserPassword"
+          $ref: "#/components/schemas/FieldRequiredUserPassword"
     UserLoginRequestDTO:
       type: object
       required:
@@ -173,9 +182,9 @@ components:
         - password
       properties:
         phoneNumber:
-          $ref: "#/components/schemas/FieldUserPhoneNumber"
+          $ref: "#/components/schemas/FieldRequiredUserPhoneNumber"
         password:
-          $ref: "#/components/schemas/FieldUserPassword"
+          $ref: "#/components/schemas/FieldRequiredUserPassword"
     UserUpdateRequestDTO:
       type: object
       required:
@@ -183,9 +192,9 @@ components:
         - phoneNumber
       properties:
         name:
-          $ref: "#/components/schemas/FieldUserName"
+          $ref: "#/components/schemas/FieldOmitemptyUserName"
         phoneNumber:
-          $ref: "#/components/schemas/FieldUserPhoneNumber"
+          $ref: "#/components/schemas/FieldOmitemptyUserPhoneNumber"
     UserRegisterResponseDTO:
       type: object
       required:

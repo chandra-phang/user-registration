@@ -17,7 +17,7 @@ func (s *Server) UserRegister(ctx echo.Context) error {
 	var requestBody generated.UserRegisterRequestDTO
 	err := ctx.Bind(&requestBody)
 	if err != nil {
-		resp := generated.ErrorMessageResponseDTO{Error: "invalid Request Body"}
+		resp := generated.ErrorMessageResponseDTO{Error: apperror.ErrInvalidRequestBody.Error()}
 		return ctx.JSON(http.StatusBadRequest, resp)
 	}
 
@@ -79,7 +79,7 @@ func (s *Server) UserLogin(ctx echo.Context) error {
 	var requestBody generated.UserLoginRequestDTO
 	err := ctx.Bind(&requestBody)
 	if err != nil {
-		resp := generated.ErrorMessageResponseDTO{Error: "invalid Request Body"}
+		resp := generated.ErrorMessageResponseDTO{Error: apperror.ErrInvalidRequestBody.Error()}
 		return ctx.JSON(http.StatusBadRequest, resp)
 	}
 
@@ -150,7 +150,7 @@ func (s *Server) UpdateUser(ctx echo.Context) error {
 	var requestBody generated.UserUpdateRequestDTO
 	err = ctx.Bind(&requestBody)
 	if err != nil {
-		resp := generated.ErrorMessageResponseDTO{Error: "invalid Request Body"}
+		resp := generated.ErrorMessageResponseDTO{Error: apperror.ErrInvalidRequestBody.Error()}
 		return ctx.JSON(http.StatusBadRequest, resp)
 	}
 
@@ -162,12 +162,9 @@ func (s *Server) UpdateUser(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, resp)
 	}
 
-	if requestBody.PhoneNumber != "" {
-		if !utils.IsValidPhoneNumber(requestBody.PhoneNumber) {
-			errorMessage := `Phone number must start with country code "+62"`
-			resp := generated.ErrorMessageResponseDTO{Error: errorMessage}
-			return ctx.JSON(http.StatusBadRequest, resp)
-		}
+	if requestBody.PhoneNumber == "" && requestBody.Name == "" {
+		resp := generated.ErrorMessageResponseDTO{Error: apperror.ErrInvalidRequestBody.Error()}
+		return ctx.JSON(http.StatusBadRequest, resp)
 	}
 
 	user, err := s.Repository.GetUserByID(ctx.Request().Context(), tokenUser.ID)
@@ -176,15 +173,23 @@ func (s *Server) UpdateUser(ctx echo.Context) error {
 		return ctx.JSON(http.StatusForbidden, resp)
 	}
 
-	existingUser, err := s.Repository.GetUserByPhoneNumber(ctx.Request().Context(), requestBody.PhoneNumber)
-	if err != nil && err != apperror.ErrObjectNotExists {
-		resp := generated.ErrorMessageResponseDTO{Error: err.Error()}
-		return ctx.JSON(http.StatusForbidden, resp)
-	}
+	if requestBody.PhoneNumber != "" {
+		if !utils.IsValidPhoneNumber(requestBody.PhoneNumber) {
+			errorMessage := `Phone number must start with country code "+62"`
+			resp := generated.ErrorMessageResponseDTO{Error: errorMessage}
+			return ctx.JSON(http.StatusBadRequest, resp)
+		}
 
-	if existingUser != nil && existingUser.ID != user.ID {
-		resp := generated.ErrorMessageResponseDTO{Error: apperror.ErrDuplicateRecordFound.Error()}
-		return ctx.JSON(http.StatusConflict, resp)
+		existingUser, err := s.Repository.GetUserByPhoneNumber(ctx.Request().Context(), requestBody.PhoneNumber)
+		if err != nil && err != apperror.ErrObjectNotExists {
+			resp := generated.ErrorMessageResponseDTO{Error: err.Error()}
+			return ctx.JSON(http.StatusInternalServerError, resp)
+		}
+
+		if existingUser != nil && existingUser.ID != user.ID {
+			resp := generated.ErrorMessageResponseDTO{Error: apperror.ErrDuplicateRecordFound.Error()}
+			return ctx.JSON(http.StatusConflict, resp)
+		}
 	}
 
 	if requestBody.Name != "" {

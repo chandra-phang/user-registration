@@ -19,7 +19,7 @@ func (r *Repository) CreateUser(ctx context.Context, user model.User) error {
 	}
 	res, err := r.Db.ExecContext(ctx, query, params...)
 	if err != nil {
-		return nil
+		return apperror.ErrCreateRecordFailed
 	}
 	affected, _ := res.RowsAffected()
 	if affected == 0 {
@@ -39,7 +39,7 @@ func (r *Repository) GetUserByPhoneNumber(ctx context.Context, phoneNumber strin
 	`
 	rows, err := r.Db.QueryContext(ctx, query, phoneNumber)
 	if err != nil {
-		return nil, errors.New("get record failed")
+		return nil, apperror.ErrGetRecordFailed
 	}
 
 	var user = &model.User{}
@@ -69,7 +69,7 @@ func (r *Repository) GetUserByID(ctx context.Context, id string) (*model.User, e
 	`
 	rows, err := r.Db.QueryContext(ctx, query, id)
 	if err != nil {
-		return nil, errors.New("get record failed")
+		return nil, apperror.ErrGetRecordFailed
 	}
 
 	var user = &model.User{}
@@ -100,7 +100,7 @@ func (r *Repository) UpdateUser(ctx context.Context, user model.User) error {
 	}
 	res, err := r.Db.ExecContext(ctx, query, params...)
 	if err != nil {
-		return nil
+		return apperror.ErrUpdateRecordFailed
 	}
 	affected, _ := res.RowsAffected()
 	if affected == 0 {
@@ -120,7 +120,7 @@ func (r *Repository) CreateLoginLog(ctx context.Context, loginLog model.LoginLog
 	}
 	res, err := r.Db.ExecContext(ctx, query, params...)
 	if err != nil {
-		return nil
+		return apperror.ErrCreateRecordFailed
 	}
 	affected, _ := res.RowsAffected()
 	if affected == 0 {
