@@ -4,19 +4,25 @@
 
 all: build/main
 
+init: generate
+	go mod tidy
+	go mod vendor
+	cert
+
 build/main: cmd/main.go generated
 	@echo "Building..."
 	go build -o $@ $<
 
-clean:
-	rm -rf generated
-
-init: generate
-	go mod tidy
-	go mod vendor
-
 test:
 	go test -short -coverprofile coverage.out -v ./...
+
+cert:
+	@echo "Generating certificate..."
+	openssl genpkey -algorithm RSA -out private-key.pem
+	openssl rsa -pubout -in private-key.pem -out public-key.pem
+
+clean:
+	rm -rf generated
 
 generate: generated generate_mocks
 

@@ -28,3 +28,7 @@ build
 
 # Generated
 generated
+
+# Secret
+public-key.pem
+private-key.pem

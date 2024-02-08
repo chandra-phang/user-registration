@@ -1,5 +1,5 @@
 # This is the OpenAPI specification for your service. It is used to generate the client code.
-# To generate the server code, use the Gradle task `openApiGenerate`. The 
+# To generate the server code, use the Gradle task `openApiGenerate`. The
 # generated code will be placed in `build/generate-resources/main`.
 #
 # We will evaluate you based on how well you design your API.
@@ -15,44 +15,215 @@ info:
   license:
     name: MIT
 servers:
-  - url: http://localhost
+  - url: http://localhost:8080
 paths:
-  /hello:
-    get:
-      summary: This is just a test endpoint to get you started. Please delete this endpoint.
-      operationId: hello
-      parameters:
-        - name: id
-          in: query
-          required: true
-          schema:
-            type: integer
+  /v1/users/register:
+    post:
+      tags:
+      - User
+      summary: User Registration
+      operationId: UserRegister
+      description: Endpoint for user registration.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegisterRequestDTO"
       responses:
-        '200':
-          description: Test return
-          content:
-            application/json:    
-              schema:
-                $ref: "#/components/schemas/HelloResponse"
-        '404':
-          description: Not found
+        '201':
+          description: User registered successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/UserRegisterResponseDTO"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageResponseDTO"
+
+  /v1/users/login:
+    post:
+      tags:
+      - User
+      summary: User Login
+      operationId: UserLogin
+      description: Endpoint for user authentication and login.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLoginRequestDTO"
+      responses:
+        '200':
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserLoginResponseDTO"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageResponseDTO"
+
+  /v1/users/profile:
+    get:
+      tags:
+      - User
+      summary: Get My Profile
+      operationId: GetUser
+      description: Endpoint to retrieve the profile information of the authenticated user.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfileResponseDTO"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageResponseDTO"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageResponseDTO"
+
+    patch:
+      tags:
+      - User
+      summary: Update My Profile
+      operationId: UpdateUser
+      description: Endpoint to update the profile information of the authenticated user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateRequestDTO"
+      responses:
+        '200':
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponseDTO"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageResponseDTO"
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageResponseDTO"
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorMessageResponseDTO"
+
 components:
   schemas:
-    HelloResponse:
+    FieldUserName:
+      type: string
+      example: agus
+      x-oapi-codegen-extra-tags:
+        validate: omitempty,min=3,max=60
+    FieldUserPhoneNumber:
+      type: string
+      example: "+628123456789"
+      x-oapi-codegen-extra-tags:
+        validate: omitempty,min=10,max=15
+    FieldUserPassword:
+      type: string
+      example: "abc123!"
+      x-oapi-codegen-extra-tags:
+        validate: omitempty,min=6,max=64
+    UserRegisterRequestDTO:
+      type: object
+      required:
+        - name
+        - phoneNumber
+        - password
+      properties:
+        name:
+          $ref: "#/components/schemas/FieldUserName"
+        phoneNumber:
+          $ref: "#/components/schemas/FieldUserPhoneNumber"
+        password:
+          $ref: "#/components/schemas/FieldUserPassword"
+    UserLoginRequestDTO:
+      type: object
+      required:
+        - phoneNumber
+        - password
+      properties:
+        phoneNumber:
+          $ref: "#/components/schemas/FieldUserPhoneNumber"
+        password:
+          $ref: "#/components/schemas/FieldUserPassword"
+    UserUpdateRequestDTO:
+      type: object
+      required:
+        - name
+        - phoneNumber
+      properties:
+        name:
+          $ref: "#/components/schemas/FieldUserName"
+        phoneNumber:
+          $ref: "#/components/schemas/FieldUserPhoneNumber"
+    UserRegisterResponseDTO:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+    UserLoginResponseDTO:
+      type: object
+      required:
+        - id
+        - token
+      properties:
+        id:
+          type: string
+        token:
+          type: string
+    UserProfileResponseDTO:
+      type: object
+      required:
+        - name
+        - phoneNumber
+      properties:
+        name:
+          type: string
+        phoneNumber:
+          type: string
+    MessageResponseDTO:
       type: object
       required:
         - message
       properties:
         message:
           type: string
-    ErrorResponse:
+    ErrorMessageResponseDTO:
       type: object
       required:
-        - message
+        - error
       properties:
-        message:
+        error:
           type: string
