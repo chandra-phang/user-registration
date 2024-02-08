@@ -15,6 +15,7 @@ import (
 const (
 	userIdKey   = "user_id"
 	expiryAtKey = "expiry_at"
+	issuedAtKey = "issued_at"
 )
 
 type IJwtService interface {
@@ -77,8 +78,7 @@ func (svc *JwtService) GenerateToken(userID string) (string, error) {
 	claims := make(jwt.MapClaims)
 	claims[userIdKey] = userID
 	claims[expiryAtKey] = now.Add(1 * time.Hour).Unix() // The expiration time after which the token must be disregarded.
-	claims["iat"] = now.Unix()                          // The time at which the token was issued.
-	claims["nbf"] = now.Unix()                          // The time before which the token must be disregarded.
+	claims[issuedAtKey] = now.Unix()
 
 	key, err := svc.parsePrivateKey()
 	if err != nil {
