@@ -1,4 +1,4 @@
-# Backend Engineering Interview Assignment (Golang)
+# User Registration using Echo and OpenApi
 
 ## Requirements
 
