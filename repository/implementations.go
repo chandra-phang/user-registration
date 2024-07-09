@@ -5,8 +5,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/chandra-phang/sawit-pro/apperror"
-	"github.com/chandra-phang/sawit-pro/model"
+	"github.com/chandra-phang/user-registration/apperror"
+	"github.com/chandra-phang/user-registration/model"
 )
 
 func (r *Repository) CreateUser(ctx context.Context, user model.User) error {

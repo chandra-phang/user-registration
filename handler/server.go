@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"github.com/chandra-phang/sawit-pro/handler/middleware"
-	"github.com/chandra-phang/sawit-pro/repository"
+	"github.com/chandra-phang/user-registration/handler/middleware"
+	"github.com/chandra-phang/user-registration/repository"
 )
 
 type Server struct {

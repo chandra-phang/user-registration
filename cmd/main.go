@@ -3,10 +3,10 @@ package main
 import (
 	"os"
 
-	"github.com/chandra-phang/sawit-pro/generated"
-	"github.com/chandra-phang/sawit-pro/handler"
-	"github.com/chandra-phang/sawit-pro/handler/middleware"
-	"github.com/chandra-phang/sawit-pro/repository"
+	"github.com/chandra-phang/user-registration/generated"
+	"github.com/chandra-phang/user-registration/handler"
+	"github.com/chandra-phang/user-registration/handler/middleware"
+	"github.com/chandra-phang/user-registration/repository"
 
 	"github.com/labstack/echo/v4"
 )

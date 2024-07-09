@@ -7,7 +7,7 @@ package repository
 import (
 	"context"
 
-	"github.com/chandra-phang/sawit-pro/model"
+	"github.com/chandra-phang/user-registration/model"
 )
 
 //go:generate mockgen -source=interfaces.go -destination=./interfaces.mock.gen.go -package=repository .

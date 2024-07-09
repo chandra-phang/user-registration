@@ -3,10 +3,10 @@ package handler
 import (
 	"net/http"
 
-	"github.com/chandra-phang/sawit-pro/apperror"
-	"github.com/chandra-phang/sawit-pro/generated"
-	"github.com/chandra-phang/sawit-pro/model"
-	"github.com/chandra-phang/sawit-pro/utils"
+	"github.com/chandra-phang/user-registration/apperror"
+	"github.com/chandra-phang/user-registration/generated"
+	"github.com/chandra-phang/user-registration/model"
+	"github.com/chandra-phang/user-registration/utils"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"golang.org/x/crypto/bcrypt"

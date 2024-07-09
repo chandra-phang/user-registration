@@ -4,10 +4,9 @@
 
 all: build/main
 
-init: generate
+init: generated
 	go mod tidy
 	go mod vendor
-	cert
 
 build/main: cmd/main.go generated
 	@echo "Building..."
